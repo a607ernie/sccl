@@ -5,7 +5,7 @@ This repository contains the code for our paper [Supporting Clustering with Cont
 **************************** **Updates** ****************************
 * 12/11/2021: We updated our code. Now you can run SCCL with virtual augmentations only. 
 * 05/28/2021: We released our initial code for SCCL, which requires explicit data augmentations.
-
+* 12/15/2022: `a607ernie` add result file 、AugData file and modify the `readme` file 
 
 ## Getting Started
 
@@ -86,6 +86,30 @@ python3 main.py \
         --gpuid 1 &
 
 ```
+
+
+## How to use (Add by a607ernie)
+- Change the txt to CSV
+    - Run Excel, from txt to import data. [convert txt to csv](https://support.geekseller.com/knowledgebase/convert-txt-file-csv/)
+    - Add a row on the top. 
+    - Name : label、text、text1、text2
+- Aug data
+  - Modify the `nlpaug_explore.py`, input and output folder
+  - They have three mode to aug data
+  - So, you can choose one mode in `main` function in `nlpaug_explore.py`
+  - If you don't have a graphics card, recommended use the `charswap` mode.
+  ```python
+  if augtype == "word_deletion":
+      augseq = word_deletion(DataSource, DataTarget, textcol="text", aug_p=aug_p)
+  elif augtype == "trans_subst":
+      augseq = contextual_augment(DataSource, DataTarget, textcol="text", aug_p=aug_p, device1=device1, device2=device2)
+  elif augtype == "charswap":
+      augseq = randomchar_augment(DataSource, DataTarget, textcol="text", aug_p=aug_p, augstage="post")
+  else:
+      print("Please specify AugType!!")
+  ``` 
+
+- If you don't have a graphics card, modify the gpuid[-1]
 
 
 
